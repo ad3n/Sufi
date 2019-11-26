@@ -1,0 +1,23 @@
+{% apply spaceless %}
+
+{% set menu = code_to_menu('INSTALLMENT') %}
+
+{% set startNumber = start_page_number() %}
+
+{% for key, data in installments %}
+    {% set order = data.order %}
+    {% set customer = order.customer %}
+    <tr>
+        <td class="text-right">{{ (key + startNumber)  }}</td>
+        <td>{{ data.installmentDate | date('d-m-Y') }}</td>
+        <td>{{ order.productName }}</td>
+        <td>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
+        <td>Rp. {{ data.amount | number_format(0, ',', '.')}}</td>
+        <td class="text-center">
+            {% if is_granted('delete', menu) and false == data.deleted %}
+                <button data-primary="{{ data.id }}" class="btn btn-xs btn-xs btn-danger delete" data-tooltip="tooltip" title="Hapus Data"><i class="fa fa-trash"></i> {{ 'label.crud.delete' | trans }}</button>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+{% endapply %}

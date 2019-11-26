@@ -1,0 +1,29 @@
+{% apply spaceless %}
+
+{% set menu = code_to_menu('ORDER') %}
+
+{% set startNumber = start_page_number() %}
+
+{% for key, data in orders %}
+    {% set customer = data.customer %}
+    <tr>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{{ (key + startNumber)  }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.productName }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}>Rp. {{ data.price | number_format(0, ',', '.') }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.installmentPeriod }}</td>
+        <td class="text-center {% if data.paidOff %}bg-success{% endif %}">{% if data.paidOff %}LUNAS{% else %}-{% endif %}</td>
+        <td class="text-center {% if data.paidOff %}bg-success{% endif %}">
+            {% if is_granted('edit', menu) and false == data.deleted %}
+                <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" data-tooltip="tooltip" title="Perbaharui Data" class="btn btn-xs btn-warning edit margin-r-5"><i class="fa fa-edit"></i> {{ 'label.crud.edit' | trans }}</button>
+                {% if false == data.paidOff %}
+                    <button data-primary="{{ data.id }}" data-tooltip="tooltip" title="{{ 'label.order.installment_add' | trans }}" class="btn btn-xs btn-success installment-list margin-r-5"><i class="fa fa-plus-square"></i> {{ 'label.order.installment_add' | trans }}</button>
+                {% endif %}
+            {% endif %}
+            {% if is_granted('delete', menu) and false == data.deleted %}
+                <button data-primary="{{ data.id }}" class="btn btn-xs btn-xs btn-danger delete" data-tooltip="tooltip" title="Hapus Data"><i class="fa fa-trash"></i> {{ 'label.crud.delete' | trans }}</button>
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}
+{% endapply %}
