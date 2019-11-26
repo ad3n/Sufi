@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Order;
 
+use Doctrine\ORM\NoResultException;
 use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Order;
 use KejawenLab\Semart\Skeleton\Repository\OrderRepository;
@@ -42,5 +43,21 @@ class OrderService implements ServiceInterface
     public function update(Order $order): void
     {
         $this->orderRepository->save($order);
+    }
+
+    public function getTotalOrder(): float
+    {
+        $queryBuilder = $this->orderRepository->createQueryBuilder('o');
+        $queryBuilder->select('SUM(o.price) AS total');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        try {
+            return (float) $query->getSingleScalarResult();
+        } catch (NoResultException $ex) {
+            return 0.0;
+        }
     }
 }

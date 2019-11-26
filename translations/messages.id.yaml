@@ -75,6 +75,7 @@ label:
         installment_period: 'Lama Angsuran'
         installment_add: 'Tambah Angsuran'
         paid_off: 'Lunas'
+        total_installment: 'Total Angsuran'
     installment:
         order: 'Order'
         installment_date: 'Tanggal Angsuran'

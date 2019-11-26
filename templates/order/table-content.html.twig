@@ -10,9 +10,10 @@
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{{ (key + startNumber)  }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.productName }}</td>
-        <td {% if data.paidOff %}class="bg-success"{% endif %}>Rp. {{ data.price | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.price | number_format(0, ',', '.') }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.installmentPeriod }}</td>
         <td class="text-center {% if data.paidOff %}bg-success{% endif %}">{% if data.paidOff %}LUNAS{% else %}-{% endif %}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{{ sum_installment(data) | number_format(0, ',', '.') }}</td>
         <td class="text-center {% if data.paidOff %}bg-success{% endif %}">
             {% if is_granted('edit', menu) and false == data.deleted %}
                 <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" data-tooltip="tooltip" title="Perbaharui Data" class="btn btn-xs btn-warning edit margin-r-5"><i class="fa fa-edit"></i> {{ 'label.crud.edit' | trans }}</button>

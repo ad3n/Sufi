@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Installment;
 
+use Doctrine\ORM\NoResultException;
 use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Installment;
 use KejawenLab\Semart\Skeleton\Entity\Order;
@@ -35,6 +36,40 @@ class InstallmentService implements ServiceInterface
         }
 
         return false;
+    }
+
+    public function getTotalInstallmentPerOrder(Order $order): float
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('SUM(o.amount) AS total');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.order', $queryBuilder->expr()->literal($order->getId())));
+        $queryBuilder->addGroupBy('o.order');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 7, sprintf('%s:%s:%s', __CLASS__, __METHOD__, serialize($query->getParameters())));
+
+        try {
+            return (float) $query->getSingleScalarResult();
+        } catch (NoResultException $ex) {
+            return 0.0;
+        }
+    }
+
+    public function getTotalInstallment(): float
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('SUM(o.amount) AS total');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        try {
+            return (float) $query->getSingleScalarResult();
+        } catch (NoResultException $ex) {
+            return 0.0;
+        }
     }
 
     /**
