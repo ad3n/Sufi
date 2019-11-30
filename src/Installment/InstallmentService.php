@@ -72,6 +72,23 @@ class InstallmentService implements ServiceInterface
         }
     }
 
+    public function countPayment(Order $order): int
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('COUNT(1) AS total');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.order', $queryBuilder->expr()->literal($order->getId())));
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        try {
+            return (int) $query->getSingleScalarResult();
+        } catch (NoResultException $ex) {
+            return 0;
+        }
+    }
+
     /**
      * @param string $id
      *

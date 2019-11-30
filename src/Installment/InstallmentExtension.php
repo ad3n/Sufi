@@ -25,6 +25,7 @@ class InstallmentExtension extends AbstractExtension
         return [
             new TwigFunction('sum_installment', [$this, 'sumInstallment']),
             new TwigFunction('total_revenue', [$this, 'totalInstallment']),
+            new TwigFunction('count_payment', [$this, 'countPayment']),
         ];
     }
 
@@ -36,5 +37,10 @@ class InstallmentExtension extends AbstractExtension
     public function totalInstallment(): float
     {
         return $this->installmentService->getTotalInstallment();
+    }
+
+    public function countPayment(Order $order) : int
+    {
+        return $this->installmentService->countPayment($order);
     }
 }

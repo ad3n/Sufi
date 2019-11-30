@@ -74,8 +74,10 @@ label:
         price: 'Harga'
         installment_period: 'Lama Angsuran'
         installment_add: 'Tambah Angsuran'
+        installment_list: 'Detail Angsuran'
         paid_off: 'Lunas'
         total_installment: 'Total Angsuran'
+        differential: 'Selisih'
     installment:
         order: 'Order'
         installment_date: 'Tanggal Angsuran'
