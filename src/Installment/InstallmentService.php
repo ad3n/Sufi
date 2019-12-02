@@ -9,6 +9,7 @@ use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Installment;
 use KejawenLab\Semart\Skeleton\Entity\Order;
 use KejawenLab\Semart\Skeleton\Repository\InstallmentRepository;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
@@ -87,6 +88,21 @@ class InstallmentService implements ServiceInterface
         } catch (NoResultException $ex) {
             return 0;
         }
+    }
+
+    public function revenuePerMonth(int $year): array
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('YEAR(o.installmentDate) AS tahun, MONTH(o.installmentDate) AS bulan, SUM(o.amount) AS total');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('YEAR(o.installmentDate)', $queryBuilder->expr()->literal($year)));
+        $queryBuilder->addGroupBy('tahun');
+        $queryBuilder->addGroupBy('bulan');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        return $query->getArrayResult();
     }
 
     /**

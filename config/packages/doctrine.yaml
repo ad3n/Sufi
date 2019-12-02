@@ -30,6 +30,10 @@ doctrine:
             semart_softdeletable:
                 class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
                 enabled: true
+        dql:
+            string_functions:
+                MONTH: KejawenLab\Semart\Skeleton\Query\Extension\Month
+                YEAR: KejawenLab\Semart\Skeleton\Query\Extension\Year
         mappings:
             Semart:
                 is_bundle: false

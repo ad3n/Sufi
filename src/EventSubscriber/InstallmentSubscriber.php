@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\EventSubscriber;
 
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use KejawenLab\Semart\Skeleton\Entity\Installment;
 use KejawenLab\Semart\Skeleton\Installment\InstallmentService;
@@ -11,6 +13,9 @@ use KejawenLab\Semart\Skeleton\Pagination\PaginationEvent;
 use KejawenLab\Semart\Skeleton\Request\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+/**
+ * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
+ */
 class InstallmentSubscriber implements EventSubscriberInterface
 {
     private $orderService;
@@ -36,7 +41,7 @@ class InstallmentSubscriber implements EventSubscriberInterface
         $order = $this->orderService->get($session->get('orderId'));
         $installment->setOrder($this->orderService->get($session->get('orderId')));
 
-        if ($this->installmentService->isPaidOff($order, $request->request->get('amount'))) {
+        if ($this->installmentService->isPaidOff($order, (float) $request->request->get('amount'))) {
             $order->setPaidOff(true);
             $this->orderService->update($order);
         }
@@ -58,6 +63,7 @@ class InstallmentSubscriber implements EventSubscriberInterface
             $queryBuilder = $event->getQueryBuilder();
             $queryBuilder->join(sprintf('%s.order', $event->getJoinAlias('root')), '_or');
             $queryBuilder->andWhere($queryBuilder->expr()->eq('_or.id', $queryBuilder->expr()->literal($orderId)));
+            $queryBuilder->addOrderBy(sprintf('%s.installmentDate', $event->getJoinAlias('root')), Criteria::DESC);
             $event->addJoinAlias('order', 'or');
         }
     }
