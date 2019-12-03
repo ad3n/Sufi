@@ -125,6 +125,9 @@
     "phlak/twine": {
         "version": "2.3.0"
     },
+    "php": {
+        "version": "7.2"
+    },
     "phpdocumentor/reflection-common": {
         "version": "1.0.1"
     },
@@ -303,6 +306,9 @@
     "symfony/dotenv": {
         "version": "v4.2.10"
     },
+    "symfony/error-handler": {
+        "version": "v4.4.1"
+    },
     "symfony/event-dispatcher": {
         "version": "v4.2.10"
     },
@@ -399,9 +405,6 @@
     },
     "symfony/polyfill-php73": {
         "version": "v1.12.0"
-    },
-    "symfony/process": {
-        "version": "v4.2.10"
     },
     "symfony/profiler-pack": {
         "version": "v1.0.4"
@@ -531,15 +534,6 @@
             "config/packages/test/web_profiler.yaml",
             "config/routes/dev/web_profiler.yaml"
         ]
-    },
-    "symfony/web-server-bundle": {
-        "version": "3.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "3.3",
-            "ref": "dae9b39fd6717970be7601101ce5aa960bf53d9a"
-        }
     },
     "symfony/yaml": {
         "version": "v4.2.10"
