@@ -1,7 +1,7 @@
 monolog:
     handlers:
         main:
-            type: rotating_file
+            type: fingers_crossed
             action_level: error
             handler: nested
             excluded_404s:
