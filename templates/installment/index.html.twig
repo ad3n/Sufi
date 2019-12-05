@@ -43,7 +43,8 @@
             </div>
             <div class="box box-footer">
                 <div class="col-md-2 col-xs-2 col-sm-2 col-lg-2 pull-left margin-r-5">
-                    <button type="button" class="btn btn-danger refresh"><i class="fa fa-refresh"></i> {{ 'label.crud.refresh' | trans }}</button>
+                    <button type="button" class="btn btn-danger refresh margin-r-5"><i class="fa fa-refresh"></i> {{ 'label.crud.refresh' | trans }}</button>
+                    <button type="button" class="btn btn-warning back"><i class="fa fa-backward"></i> {{ 'label.crud.back' | trans }}</button>
                 </div>
                 <div class="col-md-9 col-xs-9 col-sm-9 col-lg-9 pull-right pagination-box">
                 </div>
@@ -154,6 +155,10 @@
             let url = jQuery(this).attr('href');
 
             refreshTable(url, '{{ title }}');
+        });
+
+        $(document).on('click', '.back', function () {
+            window.location.href = Routing.generate('orders_index', {});
         });
     });
 </script>
