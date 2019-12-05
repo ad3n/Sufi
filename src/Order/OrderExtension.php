@@ -26,6 +26,10 @@ class OrderExtension extends AbstractExtension
         return [
             new TwigFunction('total_order', [$this, 'totalOrder']),
             new TwigFunction('count_order', [$this, 'countOrder']),
+            new TwigFunction('count_payoff', [$this, 'countPayOff']),
+            new TwigFunction('count_outstanding', [$this, 'countOutStanding']),
+            new TwigFunction('profit_projection', [$this, 'profitProjection']),
+            new TwigFunction('real_profit', [$this, 'realProfit']),
         ];
     }
 
@@ -37,5 +41,25 @@ class OrderExtension extends AbstractExtension
     public function countOrder(): int
     {
         return $this->orderService->countOrder();
+    }
+
+    public function countPayOff(): int
+    {
+        return $this->orderService->countPayOff();
+    }
+
+    public function countOutStanding(): int
+    {
+        return $this->orderService->countOutStanding();
+    }
+
+    public function profitProjection(): array
+    {
+        return $this->orderService->getProfitProjection();
+    }
+
+    public function realProfit(): float
+    {
+        return $this->orderService->getRealProfit();
     }
 }

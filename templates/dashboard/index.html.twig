@@ -7,36 +7,57 @@
 {% block content %}{% apply spaceless %}
 {% set totalOrder = total_order() %}
 {% set totalRevenue = total_revenue() %}
+{% set profit = profit_projection() %}
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <div class="box-body margin-10">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <table class="table table-responsive no-padding table-bordered table-hover table-striped">
                             <tr class="text-bold">
-                                <td>Total Kredit</td>
-                                <td>:</td>
-                                <td>Rp. {{ totalOrder | number_format(0, ',', '.') }}</td>
+                                <td style="width: 227px !important;">Total Order:</td>
+                                <td class="text-right">{{ count_order() | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
-                                <td>Total Order</td>
-                                <td>:</td>
-                                <td>{{ count_order() | number_format(0, ',', '.') }}</td>
+                                <td>Total Lunas:</td>
+                                <td class="text-right">{{ count_payoff() | number_format(0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>Total Out Standing:</td>
+                                <td class="text-right">{{ count_outstanding() | number_format(0, ',', '.') }}</td>
                             </tr>
                         </table>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <table class="table table-responsive no-padding table-bordered table-hover table-striped">
                             <tr class="text-bold">
-                                <td>Total Revenue</td>
-                                <td>:</td>
-                                <td>Rp. {{ totalRevenue | number_format(0, ',', '.') }}</td>
+                                <td style="width: 227px !important;">Total Kredit:</td>
+                                <td class="text-right">Rp. {{ totalOrder | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
-                                <td>Total Selisih</td>
-                                <td>:</td>
-                                <td>Rp. {{ (totalOrder - totalRevenue) | number_format(0, ',', '.') }}</td>
+                                <td>Total Revenue:</td>
+                                <td class="text-right">Rp. {{ totalRevenue | number_format(0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>Total Selisih:</td>
+                                <td class="text-right">Rp. {{ (totalOrder - totalRevenue) | number_format(0, ',', '.') }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <table class="table table-responsive no-padding table-bordered table-hover table-striped">
+                            <tr class="text-bold">
+                                <td style="width: 227px !important;">Proyek Keuntungan:</td>
+                                <td class="text-right">Rp. {{ (profit['margin'] + profit['cashback']) | number_format(0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>Real Keuntungan:</td>
+                                <td class="text-right">Rp. {{ real_profit() | number_format(0, ',', '.') }}</td>
+                            </tr>
+                            <tr class="text-bold">
+                                <td>Cashback:</td>
+                                <td class="text-right">Rp. {{ profit['cashback'] | number_format(0, ',', '.') }}</td>
                             </tr>
                         </table>
                     </div>

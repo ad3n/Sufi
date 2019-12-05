@@ -22,7 +22,6 @@
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.price + data.margin) | number_format(0, ',', '.') }}</td>
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.margin + data.cashback) | number_format(0, ',', '.') }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.installmentPeriod ~ ' / ' ~ countPayment }}</td>
-        <td class="text-center {% if data.paidOff %}bg-success{% endif %}">{% if data.paidOff %}LUNAS{% else %}-{% endif %}</td>
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ totalInstallment | number_format(0, ',', '.') }}</td>
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{% if 0 > diff %}Rp. {{ 0.00 | number_format(0, ',', '.') }}{% else %}(Rp. {{ diff | number_format(0, ',', '.') }}){% endif %}</td>
         <td class="text-center {% if data.paidOff %}bg-success{% endif %}">

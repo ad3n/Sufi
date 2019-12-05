@@ -72,9 +72,6 @@ class Order
     /**
      * @ORM\Column(name="cashback", type="decimal", precision=17, scale=0)
      *
-     * @Assert\Positive()
-     * @Assert\NotBlank()
-     *
      * @Groups({"read"})
      */
     private $cashback;
