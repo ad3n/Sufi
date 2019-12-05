@@ -39,7 +39,7 @@ class EncodePasswordSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Application::PRE_VALIDATION_EVENT => [['setPassword']],
+            RequestEvent::class => 'setPassword',
         ];
     }
 }

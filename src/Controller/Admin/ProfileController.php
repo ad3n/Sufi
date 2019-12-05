@@ -41,6 +41,7 @@ class ProfileController extends AdminController
         if (!$user) {
             throw new NotFoundHttpException();
         }
+
         $requestHandler->handle($request, $user);
         $this->commit($user);
 
