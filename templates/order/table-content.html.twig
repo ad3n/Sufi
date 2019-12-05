@@ -7,7 +7,7 @@
 {% for key, data in orders %}
     {% set customer = data.customer %}
     {% set totalInstallment = sum_installment(data) %}
-    {% set diff = data.price - totalInstallment %}
+    {% set diff = data.price + data.margin - totalInstallment %}
     {% set countPayment = count_payment(data) %}
     {% if 0 != countPayment %}
         {% set countPayment = countPayment - 1 %}
@@ -17,6 +17,10 @@
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.productName }}</td>
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.price | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.margin | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.cashback | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.price + data.margin) | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.margin + data.cashback) | number_format(0, ',', '.') }}</td>
         <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.installmentPeriod ~ ' / ' ~ countPayment }}</td>
         <td class="text-center {% if data.paidOff %}bg-success{% endif %}">{% if data.paidOff %}LUNAS{% else %}-{% endif %}</td>
         <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ totalInstallment | number_format(0, ',', '.') }}</td>

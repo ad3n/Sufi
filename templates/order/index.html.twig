@@ -36,6 +36,10 @@
                             <th class="text-center">{{ 'label.customer.name' | trans }} <i data-sort="no" data-sort-field="customer.Name" class="fa fa-sort sortable pull-right"></i></th>
                             <th class="text-center">{{ 'label.order.product_name' | trans }} <i data-sort="no" data-sort-field="productName" class="fa fa-sort sortable sortable-default pull-right"></i></th>
                             <th class="text-center">{{ 'label.order.price' | trans }}</th>
+                            <th class="text-center">{{ 'label.order.margin' | trans }}</th>
+                            <th class="text-center">{{ 'label.order.cashback' | trans }}</th>
+                            <th class="text-center">{{ 'label.order.total_price' | trans }}</th>
+                            <th class="text-center">{{ 'label.order.total_margin' | trans }}</th>
                             <th class="text-center">{{ 'label.order.installment_period' | trans }}</th>
                             <th class="text-center">{{ 'label.order.paid_off' | trans }}</th>
                             <th class="text-center">{{ 'label.order.total_installment' | trans }}</th>
@@ -90,6 +94,18 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">{{ 'label.order.margin' | trans }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="margin" placeholder="{{ 'label.order.margin' | trans }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">{{ 'label.order.cashback' | trans }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="cashback" placeholder="{{ 'label.order.cashback' | trans }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <label for="username" class="col-sm-2 control-label">{{ 'label.order.installment_period' | trans }}</label>
                         <div class="col-sm-10">
                             <select class="form-control select2-static" id="installmentPeriod">
@@ -136,6 +152,8 @@
             let customer = $('#customer').val();
             let productName = $('#productName').val();
             let price = $('#price').val();
+            let margin = $('#margin').val();
+            let cashback = $('#cashback').val();
             let installmentPeriod = $('#installmentPeriod').val();
 
             $.post(Routing.generate('orders_save'), {
@@ -145,6 +163,8 @@
                 customer: customer,
                 productName: productName,
                 price: price,
+                margin: margin,
+                cashback: cashback,
                 installmentPeriod: installmentPeriod
             }, function (response) {
                 localStorage.setItem('csrf_token', response._csrf_token);
@@ -184,6 +204,8 @@
                     $('#customer').val(data.customer.id);
                     $('#productName').val(data.productName);
                     $('#price').val(data.price);
+                    $('#margin').val(data.margin);
+                    $('#cashback').val(data.cashback);
                     $('#installmentPeriod').val(data.installmentPeriod);
 
                     $('.select2-static').trigger('change');

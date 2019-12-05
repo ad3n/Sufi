@@ -9,7 +9,6 @@ use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Installment;
 use KejawenLab\Semart\Skeleton\Entity\Order;
 use KejawenLab\Semart\Skeleton\Repository\InstallmentRepository;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
@@ -48,7 +47,7 @@ class InstallmentService implements ServiceInterface
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
-        $query->useResultCache(true, 7, sprintf('%s:%s:%s', __CLASS__, __METHOD__, serialize($query->getParameters())));
+        $query->enableResultCache(7, sprintf('%s:%s:%s', __CLASS__, __METHOD__, serialize($query->getParameters())));
 
         try {
             return (float) $query->getSingleScalarResult();
@@ -64,7 +63,7 @@ class InstallmentService implements ServiceInterface
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
-        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
         try {
             return (float) $query->getSingleScalarResult();
@@ -81,7 +80,7 @@ class InstallmentService implements ServiceInterface
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
-        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
         try {
             return (int) $query->getSingleScalarResult();
@@ -100,7 +99,7 @@ class InstallmentService implements ServiceInterface
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
-        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
         return $query->getArrayResult();
     }

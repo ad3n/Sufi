@@ -79,6 +79,10 @@ label:
         paid_off: 'Lunas'
         total_installment: 'Total Angsuran'
         differential: 'Selisih'
+        margin: 'Keuntungan'
+        cashback: 'Cashback'
+        total_price: 'Total Harga'
+        total_margin: 'Total Keuntungan'
     installment:
         order: 'Order'
         installment_date: 'Tanggal Angsuran'

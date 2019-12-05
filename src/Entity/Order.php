@@ -60,6 +60,26 @@ class Order
     private $price;
 
     /**
+     * @ORM\Column(name="keuntungan", type="decimal", precision=17, scale=0)
+     *
+     * @Assert\Positive()
+     * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
+     */
+    private $margin;
+
+    /**
+     * @ORM\Column(name="cashback", type="decimal", precision=17, scale=0)
+     *
+     * @Assert\Positive()
+     * @Assert\NotBlank()
+     *
+     * @Groups({"read"})
+     */
+    private $cashback;
+
+    /**
      * @ORM\Column(name="lama_cicilan", type="smallint")
      *
      * @Assert\Positive()
@@ -109,6 +129,26 @@ class Order
     public function setPrice(float $price): void
     {
         $this->price = $price;
+    }
+
+    public function getMargin(): float
+    {
+        return (float) $this->margin;
+    }
+
+    public function setMargin(float $margin): void
+    {
+        $this->margin = $margin;
+    }
+
+    public function getCashback(): float
+    {
+        return (float) $this->cashback;
+    }
+
+    public function setCashback(float $cashback): void
+    {
+        $this->cashback = $cashback;
     }
 
     public function getInstallmentPeriod(): int

@@ -48,16 +48,28 @@ class OrderService implements ServiceInterface
     public function getTotalOrder(): float
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
-        $queryBuilder->select('SUM(o.price) AS total');
+        $queryBuilder->select('SUM(o.price + o.margin) AS total');
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
-        $query->useResultCache(true, 7, sprintf('%s:%s', __CLASS__, __METHOD__));
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
         try {
             return (float) $query->getSingleScalarResult();
         } catch (NoResultException $ex) {
             return 0.0;
         }
+    }
+
+    public function countOrder(): int
+    {
+        $queryBuilder = $this->orderRepository->createQueryBuilder('o');
+        $queryBuilder->select('COUNT(1) AS total');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        return (int) $query->getSingleScalarResult();
     }
 }

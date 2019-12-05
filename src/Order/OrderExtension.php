@@ -25,11 +25,17 @@ class OrderExtension extends AbstractExtension
     {
         return [
             new TwigFunction('total_order', [$this, 'totalOrder']),
+            new TwigFunction('count_order', [$this, 'countOrder']),
         ];
     }
 
     public function totalOrder(): float
     {
         return $this->orderService->getTotalOrder();
+    }
+
+    public function countOrder(): int
+    {
+        return $this->orderService->countOrder();
     }
 }
