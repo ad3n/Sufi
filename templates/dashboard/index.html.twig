@@ -53,7 +53,7 @@
                             </tr>
                             <tr class="text-bold">
                                 <td>Real Keuntungan:</td>
-                                <td class="text-right">Rp. {{ real_profit() | number_format(0, ',', '.') }}</td>
+                                <td class="text-right">Rp. {{ (real_profit() + profit['cashback']) | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
                                 <td>Cashback:</td>

@@ -115,7 +115,7 @@ class OrderService implements ServiceInterface
     public function getRealProfit(): float
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
-        $queryBuilder->select('SUM(o.margin + o.cashback) AS total');
+        $queryBuilder->select('SUM(o.margin) AS total');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isPaidOff', $queryBuilder->expr()->literal(true)));
 
         $query = $queryBuilder->getQuery();
