@@ -107,7 +107,7 @@ class InstallmentService implements ServiceInterface
     public function lastInstallments(): array
     {
         $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
-        $queryBuilder->select('o.amount, c.name, _or.productName');
+        $queryBuilder->select('o.installmentDate, o.amount, c.name, _or.productName');
         $queryBuilder->innerJoin('o.order', '_or');
         $queryBuilder->innerJoin('_or.customer', 'c');
         $queryBuilder->addOrderBy('o.installmentDate', 'DESC');

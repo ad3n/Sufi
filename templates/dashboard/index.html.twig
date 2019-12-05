@@ -103,6 +103,7 @@
                             <thead>
                                 <tr>
                                     <th class="text-center" style="width: 49px;">No</th>
+                                    <th class="text-center" style="width: 177px;">{{ 'label.installment.installment_date' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.customer.name' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.order.product_name' | trans }}</th>
                                     <th class="text-center">{{ 'label.report.amount' | trans }}</th>
@@ -113,6 +114,7 @@
                             {% for i, data in lastInstallments %}
                                 <tr>
                                     <td class="text-right">{{ i + 1 }}</td>
+                                    <td class="text-center">{{ data.installmentDate | date('d-m-Y') }}</td>
                                     <td>{{ data.name }}</td>
                                     <td>{{ data.productName }}</td>
                                     <td class="text-right">Rp. {{ data.amount | number_format(0, ',', '.')}}</td>
