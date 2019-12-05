@@ -137,7 +137,7 @@ class InstallmentService implements ServiceInterface
      */
     public function getByOrder(Order $order): array
     {
-        return $this->installmentRepository->findBy(['order' => $order]);
+        return $this->installmentRepository->findBy(['order' => $order], ['installmentDate' => 'DESC']);
     }
 
     /**
