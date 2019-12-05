@@ -131,6 +131,16 @@ class InstallmentService implements ServiceInterface
     }
 
     /**
+     * @param Order $order
+     *
+     * @return Installment[]
+     */
+    public function getByOrder(Order $order): array
+    {
+        return $this->installmentRepository->findBy(['order' => $order]);
+    }
+
+    /**
     * @return Installment[]
     */
     public function getActives(): array
