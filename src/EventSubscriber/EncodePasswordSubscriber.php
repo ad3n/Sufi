@@ -29,6 +29,10 @@ class EncodePasswordSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $request = $event->getRequest();
+        $user->setPlainPassword($request->request->get('plainPassword'));
+        $request->request->remove('plainPassword');
+
         $this->passwordEncoder->encode($user);
     }
 
