@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Installment;
 
+use KejawenLab\Semart\Collection\Collection;
 use KejawenLab\Semart\Skeleton\Entity\Order;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
@@ -27,6 +28,7 @@ class InstallmentExtension extends AbstractExtension
             new TwigFunction('total_revenue', [$this, 'totalInstallment']),
             new TwigFunction('count_payment', [$this, 'countPayment']),
             new TwigFunction('revenue_per_month', [$this, 'revenuePerMonth']),
+            new TwigFunction('last_installments', [$this, 'lastInstallments']),
         ];
     }
 
@@ -47,6 +49,35 @@ class InstallmentExtension extends AbstractExtension
 
     public function revenuePerMonth(int $year): array
     {
-        return $this->installmentService->revenuePerMonth($year);
+        $records = [
+            ['bulan' => 1, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 2, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 3, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 4, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 5, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 6, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 7, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 8, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 9, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 10, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 11, 'tahun' => $year, 'total' => 0],
+            ['bulan' => 12, 'tahun' => $year, 'total' => 0],
+        ];
+
+        $result = $this->installmentService->revenuePerMonth($year);
+        foreach ($records as $key => $record) {
+            foreach ($result as $k => $item) {
+                if ($record['bulan'] === (int) $item['bulan']) {
+                    $records[$key]['total'] = $item['total'];
+                }
+            }
+        }
+
+        return  $records;
+    }
+
+    public function lastInstallments(): array
+    {
+        return $this->installmentService->lastInstallments();
     }
 }

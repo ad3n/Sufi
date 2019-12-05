@@ -104,6 +104,22 @@ class InstallmentService implements ServiceInterface
         return $query->getArrayResult();
     }
 
+    public function lastInstallments(): array
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('o.amount, c.name, _or.productName');
+        $queryBuilder->innerJoin('o.order', '_or');
+        $queryBuilder->innerJoin('_or.customer', 'c');
+        $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
+        $queryBuilder->setMaxResults(13);
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        return $query->getArrayResult();
+    }
+
     /**
      * @param string $id
      *
