@@ -16,7 +16,7 @@
                     <div class="col-md-4">
                         <table class="table table-responsive no-padding table-bordered table-hover table-striped">
                             <tr class="text-bold">
-                                <td style="width: 227px;">Total Order:</td>
+                                <td style="width: 177px;">Total Order:</td>
                                 <td class="text-right">{{ count_order() | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
@@ -32,7 +32,7 @@
                     <div class="col-md-4">
                         <table class="table table-responsive no-padding table-bordered table-hover table-striped">
                             <tr class="text-bold">
-                                <td style="width: 227px;">Total Kredit:</td>
+                                <td style="width: 177px;">Total Kredit:</td>
                                 <td class="text-right">Rp. {{ totalOrder | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
@@ -48,7 +48,7 @@
                     <div class="col-md-4">
                         <table class="table table-responsive no-padding table-bordered table-hover table-striped">
                             <tr class="text-bold">
-                                <td style="width: 227px;">Proyek Keuntungan:</td>
+                                <td style="width: 177px;">Proyek Keuntungan:</td>
                                 <td class="text-right">Rp. {{ (profit['margin'] + profit['cashback']) | number_format(0, ',', '.') }}</td>
                             </tr>
                             <tr class="text-bold">
