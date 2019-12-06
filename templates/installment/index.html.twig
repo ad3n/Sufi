@@ -67,6 +67,12 @@
                             <input type="text" class="form-control" id="amount" placeholder="{{ 'label.installment.amount' | trans }}">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="username" class="col-sm-2 control-label">{{ 'label.installment.description' | trans }}</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="description" placeholder="{{ 'label.installment.description' | trans }}">
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -97,12 +103,14 @@
         $(document).on('click', '.save', function () {
             let id = $('#id').val();
             let amount = $('#amount').val();
+            let description = $('#description').val();
 
             $.post(Routing.generate('installments_save'), {
                 _csrf_token: localStorage.getItem('csrf_token'),
                 _cache_id: localStorage.getItem('cache_id'),
                 id: id,
-                amount: amount
+                amount: amount,
+                description: description
             }, function (response) {
                 localStorage.setItem('csrf_token', response._csrf_token);
                 if ('OK' === response.status) {

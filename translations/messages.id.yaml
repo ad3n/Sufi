@@ -86,6 +86,7 @@ label:
     installment:
         order: 'Order'
         installment_date: 'Tanggal Angsuran'
+        description: 'Keterangan'
         amount: 'Total Angsuran'
     report:
         year: 'Tahun'

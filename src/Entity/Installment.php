@@ -54,6 +54,11 @@ class Installment
      */
     private $amount;
 
+    /**
+     * @ORM\Column(name="keterangan", type="string", length=7, nullable=true)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->installmentDate = new \DateTime();
@@ -87,5 +92,15 @@ class Installment
     public function setAmount(float $amount): void
     {
         $this->amount = $amount;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 }
