@@ -110,7 +110,7 @@ class InstallmentService implements ServiceInterface
         $queryBuilder->select('o.installmentDate, o.amount, c.name, _or.productName');
         $queryBuilder->innerJoin('o.order', '_or');
         $queryBuilder->innerJoin('_or.customer', 'c');
-        $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
+        $queryBuilder->addOrderBy('o.createdAt', 'DESC');
         $queryBuilder->setMaxResults(13);
 
         $query = $queryBuilder->getQuery();
@@ -137,7 +137,7 @@ class InstallmentService implements ServiceInterface
      */
     public function getByOrder(Order $order): array
     {
-        return $this->installmentRepository->findBy(['order' => $order], ['installmentDate' => 'ASC']);
+        return $this->installmentRepository->findBy(['order' => $order], ['createdAt' => 'ASC']);
     }
 
     /**
