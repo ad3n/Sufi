@@ -13,18 +13,18 @@
         {% set countPayment = countPayment - 1 %}
     {% endif %}
     <tr>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{{ (key + startNumber)  }}</td>
-        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
-        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.productName }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.price | number_format(0, ',', '.') }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.margin | number_format(0, ',', '.') }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ data.cashback | number_format(0, ',', '.') }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.price + data.margin) | number_format(0, ',', '.') }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ (data.margin + data.cashback) | number_format(0, ',', '.') }}</td>
-        <td {% if data.paidOff %}class="bg-success"{% endif %}>{{ data.installmentPeriod ~ ' / ' ~ countPayment }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">Rp. {{ totalInstallment | number_format(0, ',', '.') }}</td>
-        <td class="text-right {% if data.paidOff %}bg-success{% endif %}">{% if 0 > diff %}Rp. {{ 0.00 | number_format(0, ',', '.') }}{% else %}(Rp. {{ diff | number_format(0, ',', '.') }}){% endif %}</td>
-        <td class="text-center {% if data.paidOff %}bg-success{% endif %}">
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">{{ (key + startNumber)  }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}{% if data.cancelled %}class="bg-red-active"{% endif %}>{{ customer.name ~ '(' ~ customer.whatsAppNumber ~ ')' }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}{% if data.cancelled %}class="bg-red-active"{% endif %}>{{ data.productName }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ data.price | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ data.margin | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ data.cashback | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ (data.price + data.margin) | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ (data.margin + data.cashback) | number_format(0, ',', '.') }}</td>
+        <td {% if data.paidOff %}class="bg-success"{% endif %}{% if data.cancelled %}class="bg-red-active"{% endif %}>{{ data.installmentPeriod ~ ' / ' ~ countPayment }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">Rp. {{ totalInstallment | number_format(0, ',', '.') }}</td>
+        <td class="text-right {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">{% if 0 > diff %}Rp. {{ 0.00 | number_format(0, ',', '.') }}{% else %}(Rp. {{ diff | number_format(0, ',', '.') }}){% endif %}</td>
+        <td class="text-center {% if data.paidOff %}bg-success{% endif %}{% if data.cancelled %}bg-red-active{% endif %}">
             {% if is_granted('edit', menu) and false == data.deleted %}
                 <button data-toggle="modal" data-target="#form-modal" data-primary="{{ data.id }}" data-tooltip="tooltip" title="Perbaharui Data" class="btn btn-xs btn-warning edit margin-r-5"><i class="fa fa-edit"></i> {{ 'label.crud.edit' | trans }}</button>
                 {% if false == data.paidOff %}

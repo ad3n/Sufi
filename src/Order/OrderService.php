@@ -8,7 +8,6 @@ use Doctrine\ORM\NoResultException;
 use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Order;
 use KejawenLab\Semart\Skeleton\Repository\OrderRepository;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>
@@ -50,6 +49,7 @@ class OrderService implements ServiceInterface
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('SUM(o.price + o.margin) AS total');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -66,6 +66,7 @@ class OrderService implements ServiceInterface
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('COUNT(1) AS total');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -79,6 +80,7 @@ class OrderService implements ServiceInterface
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('COUNT(1) AS total');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isPaidOff', $queryBuilder->expr()->literal(true)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -92,6 +94,7 @@ class OrderService implements ServiceInterface
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('COUNT(1) AS total');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isPaidOff', $queryBuilder->expr()->literal(false)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -104,6 +107,7 @@ class OrderService implements ServiceInterface
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('SUM(o.margin) AS margin, SUM(o.cashback) AS cashback');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);
@@ -117,6 +121,7 @@ class OrderService implements ServiceInterface
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
         $queryBuilder->select('SUM(o.margin) AS total');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('o.isPaidOff', $queryBuilder->expr()->literal(true)));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('o.cancelled', $queryBuilder->expr()->literal(false)));
 
         $query = $queryBuilder->getQuery();
         $query->useQueryCache(true);

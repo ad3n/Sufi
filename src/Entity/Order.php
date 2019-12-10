@@ -93,9 +93,18 @@ class Order
      */
     private $isPaidOff;
 
+    /**
+     * @ORM\Column(name="batal_order", type="boolean")
+     *
+     * @Groups({"read"})
+     */
+    private $cancelled;
+
     public function __construct()
     {
+        $this->cancelled = false;
         $this->isPaidOff = false;
+        $this->cashback = 0.0;
     }
 
     public function getCustomer(): ?Customer
@@ -160,11 +169,21 @@ class Order
 
     public function isPaidOff(): bool
     {
-        return $this->isPaidOff;
+        return (bool) $this->isPaidOff;
     }
 
     public function setPaidOff(bool $isPaidOff): void
     {
         $this->isPaidOff = $isPaidOff;
+    }
+
+    public function isCancelled(): bool
+    {
+        return (bool) $this->cancelled;
+    }
+
+    public function setCancelled(bool $cancelled): void
+    {
+        $this->cancelled = $cancelled;
     }
 }
