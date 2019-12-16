@@ -30,6 +30,13 @@ class Order
     use SoftDeleteableEntity;
 
     /**
+     * @ORM\Column(name="tanggal_beli", type="date")
+     *
+     * @Groups({"read"})
+     */
+    private $orderDate;
+
+    /**
      * @ORM\ManyToOne(targetEntity="KejawenLab\Semart\Skeleton\Entity\Customer", fetch="EAGER")
      * @ORM\JoinColumn(name="pelanggan_id", referencedColumnName="id")
      *
@@ -105,6 +112,17 @@ class Order
         $this->cancelled = false;
         $this->isPaidOff = false;
         $this->cashback = 0.0;
+        $this->orderDate = new \DateTime();
+    }
+
+    public function getOrderDate(): ?\DateTimeInterface
+    {
+        return $this->orderDate;
+    }
+
+    public function setOrderDate(\DateTimeInterface $orderDate): void
+    {
+        $this->orderDate = $orderDate;
     }
 
     public function getCustomer(): ?Customer
