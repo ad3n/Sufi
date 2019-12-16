@@ -26,7 +26,7 @@ class OrderSubscriber implements EventSubscriberInterface
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $event->getQueryBuilder();
         $queryBuilder->addOrderBy(sprintf('%s.orderDate', $alias), Criteria::DESC);
-        $queryBuilder->addOrderBy(sprintf('%s.paidOff', $alias), Criteria::DESC);
+        $queryBuilder->addOrderBy(sprintf('%s.isPaidOff', $alias), Criteria::DESC);
     }
 
     public static function getSubscribedEvents(): array
