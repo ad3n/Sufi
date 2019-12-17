@@ -139,6 +139,7 @@ class InstallmentService implements ServiceInterface
                 $output[] = [
                     'nama' => $unPaidOffOrder->getCustomer()->getName(),
                     'produk' => $unPaidOffOrder->getProductName(),
+                    'harga' => ($unPaidOffOrder->getPrice() + $unPaidOffOrder->getCashback() + $unPaidOffOrder->getMargin()),
                     'angsuran_terakhir' => $installment['bulan'],
                     'angsuran' => $installment['angsuran'],
                 ];
