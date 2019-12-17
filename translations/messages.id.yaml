@@ -88,6 +88,7 @@ label:
         installment_date: 'Tanggal Angsuran'
         description: 'Keterangan'
         amount: 'Total Angsuran'
+        last_installment: 'Terakhir Mengangsur'
     report:
         year: 'Tahun'
         month: 'Bulan'

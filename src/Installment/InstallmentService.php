@@ -104,6 +104,43 @@ class InstallmentService implements ServiceInterface
         return $query->getArrayResult();
     }
 
+    public function arrearsInstallment(): array
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('c.name AS nama, MONTH(o.installmentDate) AS bulan');
+        $queryBuilder->distinct();
+        $queryBuilder->join('o.order', 'r');
+        $queryBuilder->join('r.customer', 'c');
+        $queryBuilder->andWhere($queryBuilder->expr()->lt('MONTH(o.installmentDate)', $queryBuilder->expr()->literal(date('n'))));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('r.isPaidOff', $queryBuilder->expr()->literal(false)));
+        $queryBuilder->addGroupBy('nama');
+        $queryBuilder->addGroupBy('bulan');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        return $query->getArrayResult();
+    }
+
+    public function lastestInstallments(): array
+    {
+        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+        $queryBuilder->select('c.name AS nama, o.amount AS angsuran');
+        $queryBuilder->distinct();
+        $queryBuilder->join('o.order', 'r');
+        $queryBuilder->join('r.customer', 'c');
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal(date('n'))));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('r.isPaidOff', $queryBuilder->expr()->literal(false)));
+        $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
+
+        $query = $queryBuilder->getQuery();
+        $query->useQueryCache(true);
+        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+        return $query->getArrayResult();
+    }
+
     public function lastInstallments(): array
     {
         $queryBuilder = $this->installmentRepository->createQueryBuilder('o');

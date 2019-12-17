@@ -29,6 +29,8 @@ class InstallmentExtension extends AbstractExtension
             new TwigFunction('count_payment', [$this, 'countPayment']),
             new TwigFunction('revenue_per_month', [$this, 'revenuePerMonth']),
             new TwigFunction('last_installments', [$this, 'lastInstallments']),
+            new TwigFunction('arrears_installment', [$this, 'arrearsInstallment']),
+            new TwigFunction('lastest_installments', [$this, 'lastestInstallments']),
         ];
     }
 
@@ -79,5 +81,15 @@ class InstallmentExtension extends AbstractExtension
     public function lastInstallments(): array
     {
         return $this->installmentService->lastInstallments();
+    }
+
+    public function arrearsInstallment(): array
+    {
+        return  $this->installmentService->arrearsInstallment();
+    }
+
+    public function lastestInstallments(): array
+    {
+        return  $this->installmentService->lastestInstallments();
     }
 }
