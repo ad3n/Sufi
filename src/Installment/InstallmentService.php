@@ -151,7 +151,7 @@ class InstallmentService implements ServiceInterface
     public function lastestInstallments(): array
     {
         $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
-        $queryBuilder->select('c.name AS nama, o.amount AS angsuran');
+        $queryBuilder->select('r.id AS id, c.name AS nama, o.amount AS angsuran');
         $queryBuilder->join('o.order', 'r');
         $queryBuilder->join('r.customer', 'c');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal((int) date('n'))));
@@ -165,8 +165,8 @@ class InstallmentService implements ServiceInterface
         $output = [];
         $results = $query->getArrayResult();
         foreach ($results as $result) {
-            if (!array_key_exists($result['nama'], $output)) {
-                $output[$result['nama']] = [
+            if (!array_key_exists($result['id'], $output)) {
+                $output[$result['id']] = [
                     'nama' => $result['nama'],
                     'angsuran' => $result['angsuran'],
                 ];
