@@ -145,8 +145,6 @@ class InstallmentService implements ServiceInterface
             }
         }
 
-        dump($output);
-
         return $output;
     }
 
