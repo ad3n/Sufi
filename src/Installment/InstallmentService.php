@@ -127,7 +127,6 @@ class InstallmentService implements ServiceInterface
     {
         $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
         $queryBuilder->select('c.name AS nama, o.amount AS angsuran');
-        $queryBuilder->distinct();
         $queryBuilder->join('o.order', 'r');
         $queryBuilder->join('r.customer', 'c');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal(date('n'))));
@@ -138,7 +137,18 @@ class InstallmentService implements ServiceInterface
         $query->useQueryCache(true);
         $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
-        return $query->getArrayResult();
+        $output = [];
+        $results = $query->getArrayResult();
+        foreach ($results as $result) {
+            if (!array_key_exists($result['nama'], $output)) {
+                $output[$result['nama']] = [
+                    'nama' => $result['nama'],
+                    'angsuran' => $result['angsuran'],
+                ];
+            }
+        }
+
+        return $output;
     }
 
     public function lastInstallments(): array

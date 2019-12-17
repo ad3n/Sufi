@@ -159,9 +159,11 @@
                             </thead>
                             <tbody class="table-content">
                             {% set lastestInstallments = lastest_installments() %}
-                            {% for i, data in lastestInstallments %}
+                            {% set i = 0 %}
+                            {% for data in lastestInstallments %}
+                                {% set i = i + 1 %}
                                 <tr>
-                                    <td class="text-right">{{ i + 1 }}</td>
+                                    <td class="text-right">{{ i }}</td>
                                     <td>{{ data.nama }}</td>
                                     <td class="text-right">Rp. {{ data.angsuran | number_format(0, ',', '.')}}</td>
                                 </tr>
