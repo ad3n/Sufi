@@ -133,6 +133,7 @@
                                     <th class="text-center" style="width: 49px;">No</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.customer.name' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.installment.last_installment' | trans }}</th>
+                                    <th class="text-center" style="width: 227px;">{{ 'label.installment.amount' | trans }}</th>
                                 </tr>
                             </thead>
                             <tbody class="table-content">
@@ -141,7 +142,9 @@
                                 <tr>
                                     <td class="text-right">{{ i + 1 }}</td>
                                     <td>{{ data.nama }}</td>
-                                    <td class="text-center">{{ month_to_text(data.bulan) | humanize }}</td>
+                                    <td>{{ data.produk }}</td>
+                                    <td class="text-center">{% if data.angsuran_terakhir %}{{ month_to_text(data.angsuran_terakhir) | humanize }}{% else %}-{% endif %}</td>
+                                    <td class="text-right">Rp. {{ data.angsuran | number_format(0, ',', '.')}}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

@@ -8,6 +8,7 @@ use Doctrine\ORM\NoResultException;
 use KejawenLab\Semart\Skeleton\Contract\Service\ServiceInterface;
 use KejawenLab\Semart\Skeleton\Entity\Installment;
 use KejawenLab\Semart\Skeleton\Entity\Order;
+use KejawenLab\Semart\Skeleton\Order\OrderService;
 use KejawenLab\Semart\Skeleton\Repository\InstallmentRepository;
 
 /**
@@ -17,10 +18,13 @@ class InstallmentService implements ServiceInterface
 {
     private $installmentRepository;
 
-    public function __construct(InstallmentRepository $installmentRepository)
+    private $orderService;
+
+    public function __construct(InstallmentRepository $installmentRepository, OrderService $orderService)
     {
         $installmentRepository->setCacheable(true);
         $this->installmentRepository = $installmentRepository;
+        $this->orderService = $orderService;
     }
 
     public function isPaidOff(Order $order, float $amount)
@@ -106,21 +110,44 @@ class InstallmentService implements ServiceInterface
 
     public function arrearsInstallment(): array
     {
-        $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
-        $queryBuilder->select('c.name AS nama, MONTH(o.installmentDate) AS bulan');
-        $queryBuilder->distinct();
-        $queryBuilder->join('o.order', 'r');
-        $queryBuilder->join('r.customer', 'c');
-        $queryBuilder->andWhere($queryBuilder->expr()->lt('MONTH(o.installmentDate)', $queryBuilder->expr()->literal(date('n'))));
-        $queryBuilder->andWhere($queryBuilder->expr()->eq('r.isPaidOff', $queryBuilder->expr()->literal(false)));
-        $queryBuilder->addGroupBy('nama');
-        $queryBuilder->addGroupBy('bulan');
+        $output = [];
+        $unPaidOffOrders = $this->orderService->getUnPaidOffOrders();
+        foreach ($unPaidOffOrders as $unPaidOffOrder) {
+            $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+            $queryBuilder->select('o.id');
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('o.order', $queryBuilder->expr()->literal($unPaidOffOrder->getId())));
+            $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal((int) date('n'))));
 
-        $query = $queryBuilder->getQuery();
-        $query->useQueryCache(true);
-        $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+            $query = $queryBuilder->getQuery();
+            $query->useQueryCache(true);
+            $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
 
-        return $query->getArrayResult();
+            $result = $query->getArrayResult();
+            if (empty($result)) {
+                $queryBuilder = $this->installmentRepository->createQueryBuilder('o');
+                $queryBuilder->select('MONTH(o.installmentDate) AS bulan, o.amount AS angsuran');
+                $queryBuilder->andWhere($queryBuilder->expr()->eq('o.order', $queryBuilder->expr()->literal($unPaidOffOrder->getId())));
+                $queryBuilder->setMaxResults(1);
+                $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
+
+                $query = $queryBuilder->getQuery();
+                $query->useQueryCache(true);
+                $query->enableResultCache(7, sprintf('%s:%s', __CLASS__, __METHOD__));
+
+                $installment = $query->getOneOrNullResult();
+
+                $output[] = [
+                    'nama' => $unPaidOffOrder->getCustomer()->getName(),
+                    'produk' => $unPaidOffOrder->getProductName(),
+                    'angsuran_terakhir' => $installment['bulan'],
+                    'angsuran' => $installment['angsuran'],
+                ];
+            }
+        }
+
+        dump($output);
+
+        return $output;
     }
 
     public function lastestInstallments(): array
@@ -129,7 +156,7 @@ class InstallmentService implements ServiceInterface
         $queryBuilder->select('c.name AS nama, o.amount AS angsuran');
         $queryBuilder->join('o.order', 'r');
         $queryBuilder->join('r.customer', 'c');
-        $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal(date('n'))));
+        $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal((int) date('n'))));
         $queryBuilder->andWhere($queryBuilder->expr()->eq('r.isPaidOff', $queryBuilder->expr()->literal(false)));
         $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
 

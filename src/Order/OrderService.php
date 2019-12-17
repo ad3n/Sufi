@@ -45,6 +45,14 @@ class OrderService implements ServiceInterface
         $this->orderRepository->save($order);
     }
 
+    /**
+     * @return Order[]
+     */
+    public function getUnPaidOffOrders(): array
+    {
+        return $this->orderRepository->findBy(['isPaidOff' => false]);
+    }
+
     public function getTotalOrder(): float
     {
         $queryBuilder = $this->orderRepository->createQueryBuilder('o');
