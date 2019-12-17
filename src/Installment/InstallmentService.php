@@ -165,8 +165,9 @@ class InstallmentService implements ServiceInterface
         $output = [];
         $results = $query->getArrayResult();
         foreach ($results as $result) {
-            if (!array_key_exists($result['id'], $output)) {
-                $output[$result['id']] = [
+            $id = (string) $result['id'];
+            if (!array_key_exists($id, $output)) {
+                $output[$id] = [
                     'nama' => $result['nama'],
                     'angsuran' => $result['angsuran'],
                 ];
