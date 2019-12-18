@@ -160,6 +160,7 @@
                                 <tr>
                                     <th class="text-center" style="width: 49px;">No</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.customer.name' | trans }}</th>
+                                    <th class="text-center" style="width: 227px;">{{ 'label.order.product_name' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.installment.amount' | trans }}</th>
                                 </tr>
                             </thead>
@@ -171,6 +172,7 @@
                                 <tr>
                                     <td class="text-right">{{ i }}</td>
                                     <td>{{ data.nama }}</td>
+                                    <td>{{ data.produk }}</td>
                                     <td class="text-right">Rp. {{ data.angsuran | number_format(0, ',', '.')}}</td>
                                 </tr>
                             {% endfor %}
