@@ -133,7 +133,7 @@
                                     <th class="text-center" style="width: 49px;">No</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.customer.name' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.order.product_name' | trans }}</th>
-                                    <th class="text-center" style="width: 227px;">{{ 'label.order.price' | trans }}</th>
+                                    <th class="text-center" style="width: 227px;">{{ 'label.installment.arrear_installment' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.installment.last_installment' | trans }}</th>
                                     <th class="text-center" style="width: 227px;">{{ 'label.installment.amount' | trans }}</th>
                                 </tr>
@@ -141,11 +141,12 @@
                             <tbody class="table-content">
                             {% set arrearsInstallment = arrears_installment() %}
                             {% for i, data in arrearsInstallment %}
+                                {% set totalInstallment = sum_installment(data.order) %}
                                 <tr>
                                     <td class="text-right">{{ i + 1 }}</td>
                                     <td>{{ data.nama }}</td>
                                     <td>{{ data.produk }}</td>
-                                    <td class="text-right">Rp. {{ data.harga | number_format(0, ',', '.')}}</td>
+                                    <td class="text-right">Rp. {{ (data.harga - totalInstallment) | number_format(0, ',', '.')}}</td>
                                     <td class="text-center">{% if data.angsuran_terakhir %}{{ month_to_text(data.angsuran_terakhir) | humanize }}{% else %}-{% endif %}</td>
                                     <td class="text-right">Rp. {{ data.angsuran | number_format(0, ',', '.')}}</td>
                                 </tr>

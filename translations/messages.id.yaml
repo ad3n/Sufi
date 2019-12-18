@@ -89,6 +89,7 @@ label:
         description: 'Keterangan'
         amount: 'Total Angsuran'
         last_installment: 'Terakhir Mengangsur'
+        arrear_installment: 'Total Tunggakan'
     report:
         year: 'Tahun'
         month: 'Bulan'

@@ -137,6 +137,7 @@ class InstallmentService implements ServiceInterface
                 $installment = $query->getOneOrNullResult();
 
                 $output[] = [
+                    'order' => $unPaidOffOrder,
                     'nama' => $unPaidOffOrder->getCustomer()->getName(),
                     'produk' => $unPaidOffOrder->getProductName(),
                     'harga' => ($unPaidOffOrder->getPrice() + $unPaidOffOrder->getCashback() + $unPaidOffOrder->getMargin()),
