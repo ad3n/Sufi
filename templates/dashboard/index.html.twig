@@ -84,7 +84,7 @@
                                 <tr>
                                     <td class="text-right">{{ i + 1 }}</td>
                                     <td class="text-center">{{ data.tahun }}</td>
-                                    <td class="text-center">{{ month_to_text(data.bulan) | humanize }}</td>
+                                    <td>{{ month_to_text(data.bulan) | humanize }}</td>
                                     <td class="text-right">Rp. {{ data.total | number_format(0, ',', '.')}}</td>
                                 </tr>
                             {% endfor %}
