@@ -30,7 +30,7 @@ class Order
     use SoftDeleteableEntity;
 
     /**
-     * @ORM\Column(name="tanggal_beli", type="date")
+     * @ORM\Column(name="tanggal_beli", type="date", nullable=true)
      *
      * @Groups({"read"})
      */
@@ -101,7 +101,7 @@ class Order
     private $isPaidOff;
 
     /**
-     * @ORM\Column(name="batal_order", type="boolean")
+     * @ORM\Column(name="batal_order", type="boolean", nullable=true)
      *
      * @Groups({"read"})
      */
