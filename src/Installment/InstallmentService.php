@@ -35,7 +35,7 @@ class InstallmentService implements ServiceInterface
             $amount += $installment->getAmount();
         }
 
-        if ($amount >= $order->getPrice()) {
+        if ($amount >= ($order->getPrice() + $order->getMargin())) {
             return true;
         }
 
