@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Repository;
 
-use KejawenLab\Semart\Skeleton\Entity\User;
 use Doctrine\Common\Persistence\ManagerRegistry;
+use KejawenLab\Semart\Skeleton\Entity\User;
 
 /**
  * @author Muhamad Surya Iksanudin <surya.iksanudin@gmail.com>

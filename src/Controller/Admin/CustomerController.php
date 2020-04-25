@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Controller\Admin;
 
+use KejawenLab\Semart\Skeleton\Customer\CustomerService;
 use KejawenLab\Semart\Skeleton\Entity\Customer;
 use KejawenLab\Semart\Skeleton\Pagination\Paginator;
-use KejawenLab\Semart\Skeleton\Customer\CustomerService;
 use KejawenLab\Semart\Skeleton\Request\RequestHandler;
 use KejawenLab\Semart\Skeleton\Security\Authorization\Permission;
 use Symfony\Component\HttpFoundation\JsonResponse;

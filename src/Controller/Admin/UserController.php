@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Controller\Admin;
 
-use KejawenLab\Semart\Skeleton\Entity\Menu;
 use KejawenLab\Semart\Skeleton\Entity\User;
 use KejawenLab\Semart\Skeleton\Pagination\Paginator;
 use KejawenLab\Semart\Skeleton\Request\RequestHandler;

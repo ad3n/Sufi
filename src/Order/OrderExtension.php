@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace KejawenLab\Semart\Skeleton\Order;
 
-use KejawenLab\Semart\Skeleton\Entity\Order;
-use KejawenLab\Semart\Skeleton\Installment\InstallmentService;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
