@@ -157,7 +157,6 @@ class InstallmentService implements ServiceInterface
         $queryBuilder->join('o.order', 'r');
         $queryBuilder->join('r.customer', 'c');
         $queryBuilder->andWhere($queryBuilder->expr()->eq('MONTH(o.installmentDate)', $queryBuilder->expr()->literal((int) date('n'))));
-        $queryBuilder->andWhere($queryBuilder->expr()->eq('r.isPaidOff', $queryBuilder->expr()->literal(false)));
         $queryBuilder->addOrderBy('o.installmentDate', 'DESC');
 
         $query = $queryBuilder->getQuery();
