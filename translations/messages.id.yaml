@@ -90,6 +90,7 @@ label:
         amount: 'Total Angsuran'
         last_installment: 'Terakhir Mengangsur'
         last_installment_amount: 'Angsuran Terakhir'
+        due_date: 'Jatuh Tempo'
         arrear_installment: 'Total Tunggakan'
     report:
         year: 'Tahun'
